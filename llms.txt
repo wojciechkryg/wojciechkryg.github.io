@@ -1,0 +1,46 @@
+# memolki
+
+> Logic Memo and Memory Game — Effective Brain Training for the Whole Family
+
+memolki is an Android memory card game by Tabula Games Studio. It's the perfect entertainment for everyone, regardless of age — a tool that supports cognitive development and a great alternative for relaxation.
+
+Unlike simple matching games, memolki uses association challenges: match a banana with its cross-section, a lion from the front with its side view, or a duck standing with one in flight. The rules are simple, but the challenge will test your brain!
+
+Exercise your brain, improve concentration, and sharpen your mind while enjoying calm, minimalist gameplay. If you are looking for a challenge beyond simple matching and love puzzles, this memo game is for you.
+
+## App Variants
+
+- **memolki • fruits** — match fruit pairs (banana, apple, strawberry, and 57 more)
+- **memolki • vegetables** — match vegetable pairs (tomato, carrot, broccoli, and more)
+- **memolki • mammals** — match mammal pairs (lion, elephant, dolphin, and more)
+- **memolki • birds** — match bird pairs (eagle, flamingo, penguin, and more)
+
+## Key Features
+
+- **Free to play** on Android (Google Play)
+- **Offline** — no internet connection required, perfect for travel and holidays
+- **Association challenge** — match pairs beyond simple identical images, using cross-sections and side views
+- **Competition and multiplayer** — challenge friends, compete on the global leaderboard
+- **30+ languages** — learn new words while playing
+- **Minimalist design** — clean, beautiful, and distraction-free, perfect for relaxation
+- **Brain training** — improve memory, concentration, logical thinking, and associative skills
+
+## Who Is It For?
+
+- **Toddlers (2-5 years)** — learning new concepts, recognition, and discovering the world through images
+- **School Kids (6-12 years)** — excellent memory training and logical reasoning
+- **Youth (13-18 years)** — maintain focus during study, relaxation between tasks
+- **Adults and Teens** — intensive brain training, ideal for fans of puzzles and logic games
+
+## Platform
+
+Android only. Available on Google Play.
+
+## Links
+
+- Website: https://wojciechkryg.github.io/
+- Developer: https://play.google.com/store/apps/developer?id=Tabula+Games+Studio
+- memolki • fruits: https://play.google.com/store/apps/details?id=com.wojdor.memolki.fruithalf
+- memolki • vegetables: https://play.google.com/store/apps/details?id=com.wojdor.memolki.vegetablehalf
+- memolki • mammals: https://play.google.com/store/apps/details?id=com.wojdor.memolki.mammalside
+- memolki • birds: https://play.google.com/store/apps/details?id=com.wojdor.memolki.birdside

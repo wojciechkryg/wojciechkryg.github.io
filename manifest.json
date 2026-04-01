@@ -1,0 +1,16 @@
+{
+    "name": "memolki - memory card game",
+    "short_name": "memolki",
+    "description": "A logic memo and memory card game for the whole family.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FAFAFA",
+    "theme_color": "#FFEAA1",
+    "icons": [
+        {
+            "src": "images/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}
