@@ -128,6 +128,15 @@ function initAudio() {
     };
 }
 
+document.addEventListener("visibilitychange", function () {
+    if (!bgMusic || !audioUnlocked) return;
+    if (document.hidden) {
+        bgMusic.pause();
+    } else if (musicPlaying) {
+        bgMusic.play().catch(function () {});
+    }
+});
+
 function tryUnlockMusic() {
     if (audioUnlocked || !musicPlaying) return;
     bgMusic.play().then(function () {
