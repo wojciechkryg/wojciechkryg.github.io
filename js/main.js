@@ -1,51 +1,69 @@
-var FLAVORS = [
-    { color: "#FFEAA1", logo: "images/ic_logo_fruit_half.png" },
-    { color: "#E6A0A0", logo: "images/ic_logo_vegetable_half.png" },
-    { color: "#E2BA8B", logo: "images/ic_logo_mammal_side.png" },
-    { color: "#B1DBE7", logo: "images/ic_logo_bird_side.png" }
-];
+(function () {
+    "use strict";
 
-var CROSSHATCH =
-    "repeating-linear-gradient(45deg, white 0px, white 4px, transparent 4px, transparent 11px)," +
-    "repeating-linear-gradient(-45deg, white 0px, white 4px, transparent 4px, transparent 11px),";
+    var FLAVORS = [
+        { color: "#FFEAA1", logo: "images/ic_logo_fruit_half.png" },
+        { color: "#E6A0A0", logo: "images/ic_logo_vegetable_half.png" },
+        { color: "#E2BA8B", logo: "images/ic_logo_mammal_side.png" },
+        { color: "#B1DBE7", logo: "images/ic_logo_bird_side.png" }
+    ];
 
-var bgMusic, flipSound;
-var musicPlaying = true;
-var audioUnlocked = false;
+    var CROSSHATCH =
+        "repeating-linear-gradient(45deg, white 0px, white 4px, transparent 4px, transparent 11px)," +
+        "repeating-linear-gradient(-45deg, white 0px, white 4px, transparent 4px, transparent 11px),";
 
-document.addEventListener("DOMContentLoaded", function () {
-    initI18n();
-    initCards();
-    initFloatingCards();
-    initAudio();
+    var bgMusic, flipSound;
+    var musicPlaying = true;
+    var audioUnlocked = false;
 
-    document.addEventListener("contextmenu", function (e) {
-        if (e.target.tagName === "IMG") e.preventDefault();
-    });
-});
+    // --- Bootstrap ---
 
-function initCards() {
-    document.querySelectorAll(".app-card").forEach(function (card, i) {
-        card.style.animationDelay = (0.4 + i * 0.12) + "s";
-        card.classList.add("app-card--visible");
-        card.addEventListener("animationend", function () {
-            card.classList.remove("app-card--visible");
-            card.classList.add("app-card--settled");
-        });
-        card.addEventListener("mousemove", function (e) {
-            var rect = card.getBoundingClientRect();
-            card.style.setProperty("--mouse-x", ((e.clientX - rect.left) / rect.width * 100) + "%");
-            card.style.setProperty("--mouse-y", ((e.clientY - rect.top) / rect.height * 100) + "%");
+    document.addEventListener("DOMContentLoaded", function () {
+        initI18n();
+        initCards();
+        initFloatingCards();
+        initAudio();
+        initFocusHandling();
+
+        document.addEventListener("contextmenu", function (e) {
+            if (e.target.tagName === "IMG") e.preventDefault();
         });
     });
-}
 
-function initFloatingCards() {
-    var container = document.querySelector(".floating-cards");
-    if (!container) return;
+    // --- Cards ---
 
-    for (var i = 0; i < 12; i++) {
-        var flavor = FLAVORS[i % FLAVORS.length];
+    function initCards() {
+        document.querySelectorAll(".app-card").forEach(function (card, i) {
+            card.style.animationDelay = (0.4 + i * 0.12) + "s";
+            card.classList.add("app-card--visible");
+
+            card.addEventListener("animationend", function () {
+                card.classList.remove("app-card--visible");
+                card.classList.add("app-card--settled");
+            });
+
+            card.addEventListener("mousemove", function (e) {
+                var rect = card.getBoundingClientRect();
+                var x = (e.clientX - rect.left) / rect.width * 100;
+                var y = (e.clientY - rect.top) / rect.height * 100;
+                card.style.setProperty("--mouse-x", x + "%");
+                card.style.setProperty("--mouse-y", y + "%");
+            });
+        });
+    }
+
+    // --- Floating cards ---
+
+    function initFloatingCards() {
+        var container = document.querySelector(".floating-cards");
+        if (!container) return;
+
+        for (var i = 0; i < 12; i++) {
+            container.appendChild(createFloatingCard(FLAVORS[i % FLAVORS.length]));
+        }
+    }
+
+    function createFloatingCard(flavor) {
         var card = document.createElement("div");
         card.classList.add("floating-card");
 
@@ -84,69 +102,86 @@ function initFloatingCards() {
             setTimeout(function () { c.classList.remove("floating-card--flipped"); }, 1200);
         });
 
-        container.appendChild(card);
+        return card;
     }
-}
 
-function initAudio() {
-    bgMusic = new Audio("audio/music_background.mp3");
-    bgMusic.loop = true;
-    bgMusic.volume = 0.05;
+    // --- Audio ---
 
-    flipSound = new Audio("audio/sound_card_flip_1.mp3");
-    flipSound.volume = 0.1;
+    function initAudio() {
+        bgMusic = new Audio("audio/music_background.mp3");
+        bgMusic.loop = true;
+        bgMusic.volume = 0.05;
 
-    var toggle = document.getElementById("music-toggle");
-    if (!toggle) return;
+        flipSound = new Audio("audio/sound_card_flip_1.mp3");
+        flipSound.volume = 0.1;
 
-    var iconOff = toggle.querySelector(".music-toggle__icon--off");
-    var iconOn = toggle.querySelector(".music-toggle__icon--on");
-    toggle.style.opacity = "0.4";
+        var toggle = document.getElementById("music-toggle");
+        if (!toggle) return;
 
-    function updateIcon() {
-        iconOff.style.display = musicPlaying ? "none" : "block";
-        iconOn.style.display = musicPlaying ? "block" : "none";
-    }
-    updateIcon();
+        var iconOff = toggle.querySelector(".music-toggle__icon--off");
+        var iconOn = toggle.querySelector(".music-toggle__icon--on");
+        toggle.style.opacity = "0.4";
 
-    document.body.addEventListener("touchend", tryUnlockMusic);
-    document.body.addEventListener("click", tryUnlockMusic);
-
-    toggle.addEventListener("click", function (e) {
-        e.stopPropagation();
-        if (!audioUnlocked) {
-            tryUnlockMusic();
-            return;
+        function updateIcon() {
+            iconOff.style.display = musicPlaying ? "none" : "block";
+            iconOn.style.display = musicPlaying ? "block" : "none";
         }
-        musicPlaying = !musicPlaying;
-        musicPlaying ? bgMusic.play() : bgMusic.pause();
         updateIcon();
-    });
 
-    window.onAudioUnlocked = function () {
-        toggle.style.opacity = "";
-    };
-}
+        document.body.addEventListener("touchend", tryUnlockMusic);
+        document.body.addEventListener("click", tryUnlockMusic);
 
-document.addEventListener("visibilitychange", function () {
-    if (!bgMusic || !audioUnlocked) return;
-    if (document.hidden) {
+        toggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            if (!audioUnlocked) {
+                tryUnlockMusic();
+                return;
+            }
+            musicPlaying = !musicPlaying;
+            musicPlaying ? bgMusic.play() : bgMusic.pause();
+            updateIcon();
+        });
+
+        window.onAudioUnlocked = function () {
+            toggle.style.opacity = "";
+        };
+    }
+
+    function tryUnlockMusic() {
+        if (audioUnlocked || !musicPlaying) return;
+        bgMusic.play().then(function () {
+            audioUnlocked = true;
+            if (window.onAudioUnlocked) window.onAudioUnlocked();
+        }).catch(function () {});
+    }
+
+    function tryPlaySound(sound) {
+        if (!sound) return;
+        sound.currentTime = 0;
+        sound.play().catch(function () {});
+    }
+
+    // --- Focus handling (pause/resume music) ---
+
+    function initFocusHandling() {
+        document.addEventListener("visibilitychange", function () {
+            document.hidden ? pauseMusic() : resumeMusic();
+        });
+        window.addEventListener("pagehide", pauseMusic);
+        window.addEventListener("pageshow", function (e) {
+            if (e.persisted) resumeMusic();
+        });
+        window.addEventListener("blur", pauseMusic);
+        window.addEventListener("focus", resumeMusic);
+    }
+
+    function pauseMusic() {
+        if (!bgMusic || !audioUnlocked) return;
         bgMusic.pause();
-    } else if (musicPlaying) {
+    }
+
+    function resumeMusic() {
+        if (!bgMusic || !audioUnlocked || !musicPlaying) return;
         bgMusic.play().catch(function () {});
     }
-});
-
-function tryUnlockMusic() {
-    if (audioUnlocked || !musicPlaying) return;
-    bgMusic.play().then(function () {
-        audioUnlocked = true;
-        if (window.onAudioUnlocked) window.onAudioUnlocked();
-    }).catch(function () {});
-}
-
-function tryPlaySound(sound) {
-    if (!sound) return;
-    sound.currentTime = 0;
-    sound.play().catch(function () {});
-}
+})();
