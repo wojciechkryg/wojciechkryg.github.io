@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about - memolki</title>
+    <meta name="description" content="About Tabula Games Studio, the developer of memolki memory card games.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#FFEAA1">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .about-page {
+            width: 100%;
+            max-width: 640px;
+            padding: 48px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-page__back {
+            display: inline-block;
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 1.3rem;
+            opacity: 0.4;
+            margin-bottom: 32px;
+            transition: opacity 0.2s ease;
+        }
+
+        .about-page__back:hover { opacity: 0.7; }
+
+        .about-page__title {
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease 0.1s forwards;
+        }
+
+        .about-page__section {
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .about-page__section:nth-child(3) { animation-delay: 0.15s; }
+        .about-page__section:nth-child(4) { animation-delay: 0.25s; }
+        .about-page__section:nth-child(5) { animation-delay: 0.35s; }
+
+        .about-page__heading {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            opacity: 0.75;
+        }
+
+        .about-page__text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 12px;
+            opacity: 0.6;
+        }
+
+        .about-page__text a {
+            color: var(--color-text);
+        }
+
+        .about-page__links {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 1.1rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease 0.65s forwards;
+        }
+
+        .about-page__links a {
+            color: var(--color-text);
+            text-decoration: none;
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+        }
+
+        .about-page__links a:hover { opacity: 0.7; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-cards" aria-hidden="true"></div>
+
+    <div class="about-page">
+        <a href="index.html" class="about-page__back">&larr; memolki</a>
+
+        <h1 class="about-page__title">about</h1>
+
+        <div class="about-page__section">
+            <p class="about-page__text"><strong>memolki</strong> is a series of free, educational memory card games published on Google Play by <strong>Tabula Games Studio</strong>, an independent game studio founded by Wojciech Kryg.</p>
+        </div>
+
+        <div class="about-page__section">
+            <h2 class="about-page__heading">how we use Google Ads</h2>
+            <p class="about-page__text">We run <strong>Google Ads App campaigns</strong> to promote our games and acquire new users across Google Search, Google Play, YouTube, and the Display Network.</p>
+            <p class="about-page__text">We use the <strong>Google Ads API</strong> to programmatically manage video creative assets across our campaigns. With localized promo videos for 32 languages per app variant (128+ videos total), automation is essential for efficient campaign management.</p>
+        </div>
+
+        <div class="about-page__section">
+            <h2 class="about-page__heading">contact</h2>
+            <p class="about-page__text">Wojciech Kryg — <a href="mailto:krygwojciech@gmail.com">krygwojciech@gmail.com</a></p>
+        </div>
+
+        <div class="about-page__links">
+            <a href="https://play.google.com/store/apps/developer?id=Tabula+Games+Studio" target="_blank" rel="noopener noreferrer">Google Play</a>
+            &nbsp;&bull;&nbsp;
+            <a href="https://raw.githubusercontent.com/wojciechkryg/memolki/refs/heads/main/PRIVACY_POLICY" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        "use strict";
+
+        var FLAVORS = [
+            { color: "#FFEAA1", logo: "images/ic_logo_fruit_half.png" },
+            { color: "#E6A0A0", logo: "images/ic_logo_vegetable_half.png" },
+            { color: "#E2BA8B", logo: "images/ic_logo_mammal_side.png" },
+            { color: "#B1DBE7", logo: "images/ic_logo_bird_side.png" }
+        ];
+
+        var CROSSHATCH =
+            "repeating-linear-gradient(45deg, white 0px, white 4px, transparent 4px, transparent 11px)," +
+            "repeating-linear-gradient(-45deg, white 0px, white 4px, transparent 4px, transparent 11px),";
+
+        var container = document.querySelector(".floating-cards");
+        if (!container) return;
+
+        for (var i = 0; i < 12; i++) {
+            var flavor = FLAVORS[i % FLAVORS.length];
+
+            var card = document.createElement("div");
+            card.classList.add("floating-card");
+
+            var inner = document.createElement("div");
+            inner.classList.add("floating-card__inner");
+
+            var back = document.createElement("div");
+            back.classList.add("floating-card__back");
+            back.style.background = CROSSHATCH + flavor.color;
+
+            var front = document.createElement("div");
+            front.classList.add("floating-card__front");
+            front.style.backgroundColor = flavor.color;
+
+            var img = document.createElement("img");
+            img.src = flavor.logo;
+            img.alt = "";
+            front.appendChild(img);
+
+            inner.appendChild(back);
+            inner.appendChild(front);
+            card.appendChild(inner);
+
+            var duration = 14 + Math.random() * 12;
+            card.style.left = (Math.random() * 100) + "%";
+            card.style.transform = "scale(" + (0.6 + Math.random() * 0.6) + ")";
+            card.style.animationDuration = duration + "s";
+            card.style.animationDelay = "-" + (Math.random() * duration) + "s";
+
+            card.addEventListener("click", function (e) {
+                var c = e.currentTarget;
+                if (c.classList.contains("floating-card--flipped")) return;
+                c.classList.add("floating-card--flipped");
+                setTimeout(function () { c.classList.remove("floating-card--flipped"); }, 1200);
+            });
+
+            container.appendChild(card);
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -372,6 +372,23 @@ img {
     .app-card__text { font-size: 2rem; }
 }
 
+.footer__about {
+    margin-top: var(--spacing-m);
+    font-size: 0.9rem;
+    opacity: 0.25;
+    pointer-events: auto;
+}
+
+.footer__about a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.footer__about a:hover {
+    opacity: 0.6;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
