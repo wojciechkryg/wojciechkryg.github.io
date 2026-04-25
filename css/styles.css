@@ -374,19 +374,19 @@ img {
 
 .footer__about {
     margin-top: var(--spacing-m);
-    font-size: 0.9rem;
-    opacity: 0.25;
+    font-size: 1.1rem;
+    opacity: 0.65;
     pointer-events: auto;
 }
 
 .footer__about a {
     color: var(--color-text);
-    text-decoration: none;
+    text-decoration: underline;
     transition: opacity 0.2s ease;
 }
 
 .footer__about a:hover {
-    opacity: 0.6;
+    opacity: 0.85;
 }
 
 @media (prefers-reduced-motion: reduce) {
